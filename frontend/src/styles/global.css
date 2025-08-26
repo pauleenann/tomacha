@@ -1,0 +1,25 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Sans:ital,opsz,wght@0,9..40,100..1000;1,9..40,100..1000&family=Frank+Ruhl+Libre:wght@300..900&display=swap');
+
+@import "tailwindcss";
+
+@theme{
+    /* font family */
+    --font-dm-sans: "DM Sans", sans-serif;
+    --font-frank-ruhl-libre: "Frank Ruhl Libre", serif;
+
+    /* color */
+    --color-default: #222222;
+    --color-matcha-green: #31572C;
+    --color-matcha-dark-green: #132a13;
+}
+
+button,
+.link{
+    cursor: pointer;
+}
+
+.error{
+    color: red;
+    font-size: 0.9rem;
+    margin-top: 5px;
+}
