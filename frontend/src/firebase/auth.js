@@ -15,7 +15,14 @@ export const signInWithGoogle = async ()=>{
         const idToken = await user.getIdToken();
 
         // pass to backend
-        // const response = await axios.post()
+        const response = await axios.post('http://localhost:3000/api/auth/signin-google',
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${idToken}`
+                }
+            }
+        )
         
     } catch (error) {
         console.log('Cannot sign in with google. An error occurred: ', error)
