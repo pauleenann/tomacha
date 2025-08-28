@@ -4,6 +4,7 @@ import { authIcons } from '../../utils/constants'
 import { useForm } from "react-hook-form"
 import { signInWithGoogle } from '../../firebase/auth'
 import { useAuth } from '../../context/AuthContext'
+import { useNavigate } from 'react-router'
 
 const Login = () => {
     const {login} = useAuth();
@@ -12,13 +13,15 @@ const Login = () => {
         handleSubmit,
         formState: { errors },
     } = useForm();
+    const navigate = useNavigate();
 
     const handleIconClick = async (name)=>{
         switch(name){
             case 'google':
                 try {
-                    const { user, accessToken } = await signInWithGoogle();
-                    login(user, accessToken);
+                    const { user, token } = await signInWithGoogle();
+                    await login(user, token);
+                    navigate('/')
                 } catch (err) {
                     console.error("Google sign-in failed:", err);
                 }
