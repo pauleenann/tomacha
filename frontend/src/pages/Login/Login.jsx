@@ -3,18 +3,25 @@ import loginBg from '../../assets/images/loginBg.jpg'
 import { authIcons } from '../../utils/constants'
 import { useForm } from "react-hook-form"
 import { signInWithGoogle } from '../../firebase/auth'
+import { useAuth } from '../../context/AuthContext'
 
 const Login = () => {
+    const {login} = useAuth();
     const {
         register,
         handleSubmit,
         formState: { errors },
     } = useForm();
 
-    const handleIconClick = (name)=>{
+    const handleIconClick = async (name)=>{
         switch(name){
             case 'google':
-                signInWithGoogle();
+                try {
+                    const { user, accessToken } = await signInWithGoogle();
+                    login(user, accessToken);
+                } catch (err) {
+                    console.error("Google sign-in failed:", err);
+                }
                 break;
             default: 
                 console.log('Invalid. Please try again')
@@ -105,7 +112,7 @@ const Login = () => {
                     onClick={()=>handleIconClick(item.name)}
                     className='bg-default text-white h-12 w-12 rounded-full transition duration-200 ease-in-out font-medium hover:bg-black'
                     key={index}>
-                        <i className={`${item.icon}`}></i>
+                        <i className={item.icon}></i>
                     </button>
                 ))}
             </div>

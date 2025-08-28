@@ -9,10 +9,9 @@ const provider = new GoogleAuthProvider();
 export const signInWithGoogle = async ()=>{
     try {
         const result = await signInWithPopup(auth, provider);
-        const user = result.user;
         
         //get firebase token
-        const idToken = await user.getIdToken();
+        const idToken = await result.user.getIdToken();
 
         // pass to backend
         const response = await axios.post('http://localhost:3000/api/auth/signin-google',
@@ -23,7 +22,10 @@ export const signInWithGoogle = async ()=>{
                 }
             }
         )
-        
+        console.log(response)
+
+        //return response.data
+        return response.data
     } catch (error) {
         console.log('Cannot sign in with google. An error occurred: ', error)
     }
