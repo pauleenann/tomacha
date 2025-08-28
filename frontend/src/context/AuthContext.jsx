@@ -25,6 +25,22 @@ export const AuthProvider = ({children})=>{
           }
           return config;
         });
+
+        // refresh access token
+        const refreshAccessToken = async ()=>{
+            try {
+                const response = await api.get('/auth/refresh');
+
+                if(response.data){
+                    setUser(response.data.user)
+                    setUser(response.data.token)
+                }
+            } catch (error) {
+                console.log('Cannot refresh access token: ', error)
+            }
+        }
+
+        refreshAccessToken();
       
         return () => api.interceptors.request.eject(reqInterceptor);
     }, []);

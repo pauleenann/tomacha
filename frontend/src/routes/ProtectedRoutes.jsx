@@ -4,6 +4,8 @@ import { useAuth } from "../context/AuthContext"
 
 export const ProtectedRoutes = ()=>{
     const {accessToken} = useAuth();
+    
+     
 
     return (
         // <Outlet /> is basically the slot where child routes get injected inside a parent route’s layout.

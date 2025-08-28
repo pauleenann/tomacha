@@ -19,7 +19,8 @@ export const signInWithGoogle = async ()=>{
             {
                 headers: {
                     Authorization: `Bearer ${idToken}`
-                }
+                },
+                withCredentials: true
             }
         )
         console.log(response)

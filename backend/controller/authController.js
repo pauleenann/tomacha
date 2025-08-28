@@ -1,6 +1,6 @@
 import User from "../model/User.js";
 import { setRefreshTokenCookie } from "../utils/cookie.js";
-import { generateAccessToken, generateRefreshToken } from "../utils/jwt.js";
+import { generateAccessToken, generateRefreshToken, tokenDecoder, verifyRefreshToken } from "../utils/jwt.js";
 
 // sign in with google
 export const signInWithGoogle = async (req, res)=>{
@@ -39,10 +39,10 @@ export const signInWithGoogle = async (req, res)=>{
             role: userExists.role
         })
         const refreshToken = generateRefreshToken({
-            userId: userExists._id,
-            role: userExists.role
+            userId: userExists._id
         })
 
+        console.log(refreshToken)
         // store refresh token to cookie
         setRefreshTokenCookie(res, refreshToken)
 
@@ -52,13 +52,55 @@ export const signInWithGoogle = async (req, res)=>{
             user: userExists,
             message: 'Signed in with google '
         })
-
-        console.log(userExists)
-
     } catch (error) {
         console.log(error);
         return res.status(500).json({
             message: 'Cannot sign in with Google'
+        })
+    }
+}
+
+export const refreshAccessToken = async (req, res)=>{
+    try {
+        const {refreshToken} = req.cookies;
+        console.log('refresh token: ', refreshToken)
+        if(!refreshToken){
+            return res.status(400).json({
+                message: 'Refresh token expired:('
+            })
+        }
+
+        // verify refresh token first
+        const isVerified = verifyRefreshToken(refreshToken);
+        
+        if(!isVerified){
+            return res.status(400).json({
+                message:'Refresh token expired' 
+            })
+        }
+
+        // decode refresh token to get user Idg
+        const {userId} = tokenDecoder(refreshToken);
+
+        // get user details
+        const user = await User.findById(userId);
+        
+        // generate new accesstoken
+        const accessToken = generateAccessToken({
+            userId: user._id,
+            role: user.role
+        })
+        
+        //send response
+        return res.status(200).json({
+            token: accessToken,
+            user: user,
+            message: 'Signed in with google '
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: 'Cannot refresh '
         })
     }
 }
