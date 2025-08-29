@@ -16,6 +16,7 @@
 
 body{
     overflow-x: hidden;
+    scroll-behavior: smooth;
 }
 
 button,
@@ -28,3 +29,14 @@ button,
     font-size: 0.9rem;
     margin-top: 5px;
 }
+
+/* hide scrollbar for Chrome, Safari, Edge */
+.scroll-hidden::-webkit-scrollbar {
+    display: none;
+}
+  
+/* hide scrollbar for Firefox */
+.scroll-hidden {
+    scrollbar-width: none;
+}
+  

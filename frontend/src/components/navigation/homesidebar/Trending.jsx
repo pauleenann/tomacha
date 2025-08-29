@@ -3,8 +3,8 @@ import React from 'react'
 const Trending = () => {
   return (
     <div className='bg-white p-10 rounded-xl'>
-        <h1 className='text-3xl font-medium'>What’s happening today</h1>
-        <div className='text-xl mt-7 flex flex-col gap-3'>
+        <h1 className='text-2xl font-medium'>What’s happening today</h1>
+        <div className='text mt-5 flex flex-col gap-3'>
             {[1,2,3,4,5,6].map(item=>(
                 <div className='flex flex-col'>
                     <span className='font-medium'>#MatchaMood</span>
@@ -13,7 +13,7 @@ const Trending = () => {
             ))}
                 
         </div>
-        <button className='mt-5 text-xl text-matcha-green'>
+        <button className='mt-5  text-matcha-green'>
             Show more
         </button>
     </div>

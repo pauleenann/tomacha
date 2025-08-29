@@ -2,9 +2,9 @@ import React from 'react'
 
 const HomeNavbar = () => {
   return (
-    <nav className='py-10 grid grid-cols-3 items-center text-xl'>
+    <nav className='py-10 grid grid-cols-3 items-center'>
         {/* logo */}
-        <p className='font-frank-ruhl-libre text-4xl text-default'>Tomochá</p>
+        <p className='font-frank-ruhl-libre text-3xl text-default'>Tomochá</p>
 
         {/* search bar */}
         <div
@@ -24,11 +24,11 @@ const HomeNavbar = () => {
         <div className='flex items-center justify-end text-default'>
             <button 
             className='flex items-center justify-center'>
-                <i class="fa-solid fa-bell text-3xl"></i>
+                <i class="fa-solid fa-bell text-2xl"></i>
             </button>
             <button 
             className='flex items-center justify-center'>
-                <i class="fa-solid fa-circle-user text-3xl"></i>
+                <i class="fa-solid fa-circle-user text-2xl"></i>
             </button>
         </div>
     </nav>
