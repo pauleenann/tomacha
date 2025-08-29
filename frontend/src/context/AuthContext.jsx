@@ -1,5 +1,6 @@
 import { createContext, useContext, useEffect, useState } from "react";
 import api from "../api/axiosInstance";
+import { useNavigate } from "react-router";
 
 
 const AuthContext = createContext();
@@ -7,6 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({children})=>{
     const [user, setUser] = useState();
     const [accessToken, setAccessToken] = useState();
+    const navigate = useNavigate()
 
     const login = (userData, token)=>{
         setUser(userData);
@@ -33,8 +35,11 @@ export const AuthProvider = ({children})=>{
 
                 if(response.data){
                     setUser(response.data.user)
-                    setUser(response.data.token)
+                    setAccessToken(response.data.token)
                 }
+
+                navigate('/')
+
             } catch (error) {
                 console.log('Cannot refresh access token: ', error)
             }

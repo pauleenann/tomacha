@@ -3,26 +3,29 @@ import { BrowserRouter, Routes, Route } from 'react-router'
 import Login from './pages/Login/Login'
 import { ProtectedRoutes } from './routes/ProtectedRoutes'
 import Home from './pages/Home/Home'
+import { AuthProvider } from './context/AuthContext'
 
 const App = () => {
   return (
     <div>
       <BrowserRouter>
-        <Routes>
-          {/* public routes */}
-          <Route
-          path='/login'
-          element={<Login/>}
-          />
-
-          {/* protected routes */}
-          <Route element={<ProtectedRoutes/>}>
+        <AuthProvider>
+          <Routes>
+            {/* public routes */}
             <Route
-            path='/'
-            element={<Home/>}
+            path='/login'
+            element={<Login/>}
             />
-          </Route>
-        </Routes>
+
+            {/* protected routes */}
+            <Route element={<ProtectedRoutes/>}>
+              <Route
+              path='/'
+              element={<Home/>}
+              />
+            </Route>
+          </Routes>
+        </AuthProvider>
       </BrowserRouter>
     </div>
   )
