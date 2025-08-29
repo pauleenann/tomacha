@@ -6,7 +6,7 @@ const Post = () => {
   return (
     <article
     className='bg-white w-full h-auto p-10 text-default font-dm-sans rounded-xl text-xl'>
-      <header>
+      <header className='flex justify-between items-center'>
         <div className='flex items-center gap-3'>
             <img 
             src={icon} 
@@ -16,6 +16,10 @@ const Post = () => {
                 <span className='text-gray-500'>2h ago</span>
             </div>
         </div>
+
+        <button>
+            <i class="fa-solid fa-bookmark"></i>
+        </button>
       </header>
 
       {/* post content */}
