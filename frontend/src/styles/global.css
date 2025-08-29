@@ -11,6 +11,11 @@
     --color-default: #222222;
     --color-matcha-green: #31572C;
     --color-matcha-dark-green: #132a13;
+    --color-home: #F9F9F9;
+}
+
+body{
+    overflow-x: hidden;
 }
 
 button,
