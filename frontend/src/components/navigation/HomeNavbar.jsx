@@ -6,7 +6,6 @@ import { useAuth } from '../../context/AuthContext';
 import icon from '../../assets/images/icon.png'
 
 const HomeNavbar = () => {
-    const {isCreatePostModalOpen, setIsCreatePostModalOpen} = useAuth();
     const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
@@ -41,11 +40,6 @@ const HomeNavbar = () => {
 
         {/* bell and user icon */}
         <div className='flex items-center gap-2 justify-end text-default relative'>
-            <button
-            className='bg-matcha-light-green text-white px-6 py-2 rounded-full font-medium hover:bg-matcha-green/90 transition duration-200 ease-in-out'
-            onClick={()=>setIsCreatePostModalOpen(!isCreatePostModalOpen)}>
-                Create post
-            </button>
             <button onClick={()=>setIsOpen(!isOpen)}>
                 <img src={icon} alt="" className='h-10'/>
             </button>
