@@ -9,7 +9,15 @@ const userSchema = new Schema({
         type: String,
         required: true
     },
-    email: String,
+    username: {
+        type: String,
+        unique: true
+    },
+    email: {
+        type: String,
+        required: true,
+        unique: true
+    },
     image: String,
     role: {
         type: String,
@@ -18,7 +26,7 @@ const userSchema = new Schema({
     },
     signInMethod: {
         type: String,
-        enum: ['google', 'email & password', 'apple',  'facebook'], //ito lang ung allowed 
+        enum: ['google', 'email & password'], //ito lang ung allowed 
         default: 'google'
     },
     createdAt: {

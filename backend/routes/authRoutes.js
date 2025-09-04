@@ -1,5 +1,5 @@
 import express from 'express';
-import { refreshAccessToken, signInWithGoogle, signOut } from '../controller/authController.js';
+import { refreshAccessToken, signInWithGoogle, signOut, signUp } from '../controller/authController.js';
 import { authenticateFirebase } from '../middleware/authenticateFirebase.js';
 import { authenticate } from '../middleware/auth.js';
 
@@ -19,5 +19,10 @@ router.post(
     authenticate,
     signOut
 );
+router.post(
+    '/signup',
+    authenticateFirebase,
+    signUp
+)
 
 export default router;

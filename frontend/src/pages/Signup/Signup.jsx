@@ -2,7 +2,8 @@ import React from 'react'
 import signupBg from '../../assets/images/loginBg.jpg'
 import { useAuth } from '../../context/AuthContext';
 import { useForm } from 'react-hook-form';
-import { data, Link } from 'react-router';
+import { data, Link, useNavigate } from 'react-router';
+import { signUpWithEmailPassword } from '../../firebase/auth';
 
 const Signup = () => {
     const {login} = useAuth();
@@ -13,7 +14,17 @@ const Signup = () => {
         watch
     } = useForm();
     const password = watch('password');
+    const navigate = useNavigate();
     
+    const signUp = async (data)=>{
+        try {
+            const {user, token} = await signUpWithEmailPassword(data);
+            await login(user, token);
+            navigate('/');
+        } catch (error) {
+            console.log('Error signing up: ', error)
+        }
+    }
   return (
     <div className='w-screen h-screen overflow-y-hidden grid grid-cols-1 lg:grid-cols-[40%_1fr]'>
           {/* signup image */}
@@ -32,7 +43,7 @@ const Signup = () => {
             {/* login form */}
             <form 
             className='font-dm-sans lg:w-[55%] h-full flex flex-col items-center justify-center text-default my-20'
-            onSubmit={handleSubmit(data=>console.log(data))}>
+            onSubmit={handleSubmit(signUp)}>
                 <div className='w-full text-center'>
                     <h1 className='text-2xl lg:text-3xl font-medium'>Join Tomochá Today</h1>
                     <p className='lg:text-xl'>Create your account and connect with new friends.</p>

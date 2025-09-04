@@ -36,10 +36,36 @@ export const signInWithGoogle = async ()=>{
 }
 
 // sign up with email and password
-export const signUpWithEmailPassword = async (email, password)=>{
+export const signUpWithEmailPassword = async (data)=>{
     try {
-        const response = await createUserWithEmailAndPassword(auth, email, password);
+        const userCredential = await createUserWithEmailAndPassword(auth, data.email, data.password);
+
+        //get firebase user
+        const user = userCredential.user;
+
+        //get token
+        const idToken = await user.getIdToken();
+
+        // pass to backend
+        const response = await axios.post(`${API_BASE_URL}/auth/signup`,
+            {
+                firstName: data.fname,
+                lastName: data.lname,
+                email: data.email,
+                username: data.username
+                
+            },
+            {
+                headers: {
+                    Authorization: `Bearer ${idToken}`
+                },
+                withCredentials: true
+            }
+        )
         console.log(response)
+
+        //return response.data
+        return response.data
     } catch (error) {
         console.log('Error signing up with email and password: ', error)
     }

@@ -30,6 +30,7 @@ export const signInWithGoogle = async (req, res)=>{
                 firstName: name.split(' ')[0],
                 lastName: name.split(' ')[1],
                 email: email,
+                signInMethod: 'email & password'
             })
         }
 
@@ -57,6 +58,60 @@ export const signInWithGoogle = async (req, res)=>{
         return res.status(500).json({
             message: 'Cannot sign in with Google'
         })
+    }
+}
+
+export const signUp = async (req, res)=>{
+    try {
+        const {firstName, lastName, email, username} = req.body;
+
+        // check first if user exists in the database, if does not exist, create user
+        let userExists = await User.findOne({email: email});
+
+        // create user
+        if(!userExists){
+            userExists = await User.create({
+                firstName: firstName,
+                lastName: lastName,
+                email: email,
+                username: username,
+            })
+        }
+
+        // generate access token and refresh token
+        const accessToken = generateAccessToken({
+            userId: userExists._id,
+            role: userExists.role
+        })
+        const refreshToken = generateRefreshToken({
+            userId: userExists._id
+        })
+
+        console.log(refreshToken)
+        // store refresh token to cookie
+        setRefreshTokenCookie(res, refreshToken)
+
+        //send response
+        return res.status(200).json({
+            token: accessToken,
+            user: userExists,
+            message: 'Signed in with google '
+        })
+
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({error: error})
+    }
+}
+
+export const signOut = async (req, res)=>{
+    try {
+        clearRefreshTokenCookie(res);
+        
+        return res.status(200).json({message: 'Signed out successfully'})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({error: error})
     }
 }
 
@@ -102,16 +157,5 @@ export const refreshAccessToken = async (req, res)=>{
         return res.status(500).json({
             message: 'Cannot refresh '
         })
-    }
-}
-
-export const signOut = async (req, res)=>{
-    try {
-        clearRefreshTokenCookie(res);
-        
-        return res.status(200).json({message: 'Signed out successfully'})
-    } catch (error) {
-        console.log(error);
-        return res.status(500).json({error: error})
     }
 }
