@@ -1,10 +1,12 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from 'react'
 import { userOptions } from '../../utils/constants';
 import { useNavigate } from 'react-router';
 import { signOut } from '../../firebase/auth';
+import { useAuth } from '../../context/AuthContext';
 
 const HomeNavbar = () => {
-    const [isOpen, setIsOpen] = useState();
+    const {isCreatePostModalOpen, setIsCreatePostModalOpen} = useAuth();
+    const [isOpen, setIsOpen] = useState(false);
     const navigate = useNavigate();
 
     const handleOnClick = async (item)=>{
@@ -16,7 +18,7 @@ const HomeNavbar = () => {
             navigate(item.path)
         }
     }
-
+    
   return (
     <nav className='py-10 grid grid-cols-3 items-center'>
         {/* logo */}
@@ -39,7 +41,8 @@ const HomeNavbar = () => {
         {/* bell and user icon */}
         <div className='flex items-center gap-2 justify-end text-default relative'>
             <button
-            className='font-medium border border-default py-1 px-4 rounded-full transition duration-100 ease-in-out hover:bg-matcha-green hover:border-matcha-green hover:text-white'>
+            className='font-medium border border-default py-1 px-4 rounded-full transition duration-100 ease-in-out hover:bg-matcha-green hover:border-matcha-green hover:text-white'
+            onClick={()=>setIsCreatePostModalOpen(!isCreatePostModalOpen)}>
                 Create post
             </button>
             <button 

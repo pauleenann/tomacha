@@ -5,10 +5,11 @@ import { useNavigate } from "react-router";
 const AuthContext = createContext();
 
 export const AuthProvider = ({children})=>{
+    const [loading, setLoading] = useState();
     const [user, setUser] = useState();
+    const [isCreatePostModalOpen, setIsCreatePostModalOpen] = useState(false);
     const [accessToken, setAccessToken] = useState();
     const accessTokenRef = useRef(accessToken);
-    const [loading, setLoading] = useState();
     const navigate = useNavigate();
 
     const login = (userData, token)=>{
@@ -63,7 +64,9 @@ export const AuthProvider = ({children})=>{
         accessToken,
         login,
         loading,
-        refreshAccessToken
+        refreshAccessToken,
+        isCreatePostModalOpen,
+        setIsCreatePostModalOpen
     }
 
     return (

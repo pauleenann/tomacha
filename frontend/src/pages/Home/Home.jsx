@@ -3,10 +3,14 @@ import HomeNavbar from '../../components/navigation/HomeNavbar'
 import Post from '../../components/post/Post'
 import HomeSidebar from '../../components/navigation/homesidebar/HomeSidebar'
 import StickyBox from "react-sticky-box";
+import { useAuth } from '../../context/AuthContext';
+import CreatePost from '../../components/modal/CreatePost';
 
 const Home = () => {
+  const {isCreatePostModalOpen} = useAuth();
   return (
-    <div className='w-screen min-h-screen bg-home'>
+    <div 
+    className='w-screen min-h-screen bg-home relative'>
       <div className='w-5/6 h-full m-auto'>
         {/* navbar */}
         <HomeNavbar/>
@@ -36,6 +40,9 @@ const Home = () => {
           </StickyBox>
         </div>
       </div>
+
+      {/* create post modal */}
+      {isCreatePostModalOpen && <CreatePost/>}
     </div>
   )
 }
