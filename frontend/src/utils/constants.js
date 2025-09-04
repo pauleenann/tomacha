@@ -12,3 +12,18 @@ export const authIcons = [
         icon: 'fa-brands fa-apple'
     },
 ]
+
+export const userOptions = [
+    {
+        name: 'Your Profile',
+        path: '/' 
+    },
+    {
+        name: 'Settings',
+        path: '/' 
+    },
+    {
+        name: 'Sign out',
+        action: 'signout'
+    },
+]

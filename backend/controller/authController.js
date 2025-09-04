@@ -1,5 +1,5 @@
 import User from "../model/User.js";
-import { setRefreshTokenCookie } from "../utils/cookie.js";
+import { clearRefreshTokenCookie, setRefreshTokenCookie } from "../utils/cookie.js";
 import { generateAccessToken, generateRefreshToken, tokenDecoder, verifyRefreshToken } from "../utils/jwt.js";
 
 // sign in with google
@@ -102,5 +102,16 @@ export const refreshAccessToken = async (req, res)=>{
         return res.status(500).json({
             message: 'Cannot refresh '
         })
+    }
+}
+
+export const signOut = async (req, res)=>{
+    try {
+        clearRefreshTokenCookie(res);
+        
+        return res.status(200).json({message: 'Signed out successfully'})
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({error: error})
     }
 }

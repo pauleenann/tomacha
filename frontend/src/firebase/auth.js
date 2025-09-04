@@ -2,8 +2,11 @@ import { auth } from "./firebase";
 import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 // import { createUserWithEmailAndPassword } from "firebase/auth";
 import axios from 'axios';
+import api from "../api/axiosInstance";
 
 const provider = new GoogleAuthProvider();
+
+const API_BASE_URL = import.meta.env.VITE_API_URL || 'http://localhost:3000/api';
 
 // sign in with google
 export const signInWithGoogle = async ()=>{
@@ -14,7 +17,7 @@ export const signInWithGoogle = async ()=>{
         const idToken = await result.user.getIdToken();
 
         // pass to backend
-        const response = await axios.post(`${import.meta.env.VITE_API_URL}/auth/signin-google`,
+        const response = await axios.post(`${API_BASE_URL}/auth/signin-google`,
             {},
             {
                 headers: {
@@ -29,5 +32,14 @@ export const signInWithGoogle = async ()=>{
         return response.data
     } catch (error) {
         console.log('Cannot sign in with google. An error occurred: ', error)
+    }
+}
+
+export const signOut = async ()=>{
+    try {
+        await api.post(`${API_BASE_URL}/auth/signout`)
+        await auth.signOut();
+    } catch (error) {
+        console.log('Error signing out: ', error)
     }
 }

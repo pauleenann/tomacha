@@ -6,8 +6,8 @@ import StickyBox from "react-sticky-box";
 
 const Home = () => {
   return (
-    <div className='w-screen h-screen bg-home'>
-      <div className='w-5/6 h-screen m-auto'>
+    <div className='w-screen min-h-screen bg-home'>
+      <div className='w-5/6 h-full m-auto'>
         {/* navbar */}
         <HomeNavbar/>
 

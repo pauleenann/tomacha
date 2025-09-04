@@ -1,6 +1,7 @@
 import express from 'express';
-import { refreshAccessToken, signInWithGoogle } from '../controller/authController.js';
+import { refreshAccessToken, signInWithGoogle, signOut } from '../controller/authController.js';
 import { authenticateFirebase } from '../middleware/authenticateFirebase.js';
+import { authenticate } from '../middleware/auth.js';
 
 const router = express.Router();
 
@@ -12,6 +13,11 @@ router.post(
 router.get(
     '/refresh',
     refreshAccessToken
-)
+);
+router.post(
+    '/signout',
+    authenticate,
+    signOut
+);
 
 export default router;

@@ -5,7 +5,7 @@ import img from '../../assets/images/matcha.jpg'
 const Post = () => {
   return (
     <article
-    className='bg-white w-full h-auto p-10 text-default font-dm-sans rounded-xl'>
+    className='bg-white w-full h-auto p-10 text-default font-dm-sans rounded-xl text-lg'>
       <header className='flex justify-between items-center'>
         <div className='flex items-center gap-3'>
             <img 

@@ -1,13 +1,13 @@
-import { createContext, useContext, useEffect, useState } from "react";
+import { createContext, use, useContext, useEffect, useRef, useState } from "react";
 import api from "../api/axiosInstance";
 import { useNavigate } from "react-router";
-
 
 const AuthContext = createContext();
 
 export const AuthProvider = ({children})=>{
     const [user, setUser] = useState();
     const [accessToken, setAccessToken] = useState();
+    const accessTokenRef = useRef(accessToken);
     const [loading, setLoading] = useState()
     const navigate = useNavigate()
 
@@ -16,15 +16,16 @@ export const AuthProvider = ({children})=>{
         setAccessToken(token);
     }
 
-    const getAccessToken = ()=> accessToken;
+   useEffect(()=>{
+        accessTokenRef.current = accessToken;
+   }, [accessToken]);
 
     // set up interceptor for initial render
     useEffect(() => {
         // this then runs before every request
         const reqInterceptor = api.interceptors.request.use((config) => {
-          const token = getAccessToken(); //get current token
-          if (token) {
-            config.headers.Authorization = `Bearer ${token}`;
+          if (accessTokenRef.current) {
+            config.headers.Authorization = `Bearer ${accessTokenRef.current}`;
           }
           return config;
         });

@@ -9,15 +9,14 @@ import { Puff } from 'react-loading-icons'
 const AppRoutes = () => {
     const {loading} = useAuth()
     
-
     // if backend is still authenticating the user
     if(loading){
         return(
             <div
-            className='w-screen h-screen flex items-center justify-center flex-col'><Puff stroke="#31572C" strokeOpacity={.125} speed={.75}/>
+            className='w-screen h-screen flex items-center justify-center flex-col'>
+                <Puff stroke="#31572C" strokeOpacity={.125} speed={.75}/>
                 <p className='font-frank-ruhl-libre text-3xl text-default mt-4'>Tomochá</p>
                 <p className='text-xl'>Brewing your Tomochá experience</p>
-                
             </div>
         )
     }
