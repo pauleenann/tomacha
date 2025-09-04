@@ -161,14 +161,14 @@ const Signup = () => {
                 {/* submit btn */}
                 <button 
                 type='submit'
-                className='p-3 bg-matcha-green w-full mt-5 rounded text-white transition duration-200 ease-in-out font-medium hover:bg-matcha-dark-green'>
+                className='p-3 bg-matcha-light-green w-full mt-5 rounded text-white transition duration-200 ease-in-out font-medium hover:bg-matcha-green'>
                     Sign up
                 </button>
     
                 <p className='mt-10 text-sm text-center'>Already have an account?
                     <Link 
                     to='/'
-                    className='font-semibold text-matcha-green link ms-1'>
+                    className='font-semibold text-matcha-light-green link ms-1'>
                         Log in
                     </Link>
                 </p>

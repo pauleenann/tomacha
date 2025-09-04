@@ -100,7 +100,7 @@ const Login = () => {
             {/* submit btn */}
             <button 
             type='submit'
-            className='p-3 bg-matcha-green w-full mt-5 rounded text-white transition duration-200 ease-in-out font-medium hover:bg-matcha-dark-green'>
+            className='p-3 bg-matcha-light-green w-full mt-5 rounded text-white transition duration-200 ease-in-out font-medium hover:bg-matcha-green'>
                 Login
             </button>
 
@@ -123,7 +123,7 @@ const Login = () => {
 
             <p className='mt-10 text-sm'>New here? 
                 <Link to='/signup'
-                className='font-semibold text-matcha-green link ms-1'>Join Tomochá</Link>
+                className='font-semibold text-matcha-light-green link ms-1'>Join Tomochá</Link>
             </p>
         </form>
       </div>

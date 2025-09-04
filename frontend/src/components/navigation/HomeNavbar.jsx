@@ -3,6 +3,7 @@ import { userOptions } from '../../utils/constants';
 import { useNavigate } from 'react-router';
 import { signOut } from '../../firebase/auth';
 import { useAuth } from '../../context/AuthContext';
+import icon from '../../assets/images/icon.png'
 
 const HomeNavbar = () => {
     const {isCreatePostModalOpen, setIsCreatePostModalOpen} = useAuth();
@@ -41,18 +42,12 @@ const HomeNavbar = () => {
         {/* bell and user icon */}
         <div className='flex items-center gap-2 justify-end text-default relative'>
             <button
-            className='font-medium border border-default py-1 px-4 rounded-full transition duration-100 ease-in-out hover:bg-matcha-green hover:border-matcha-green hover:text-white'
+            className='bg-matcha-light-green text-white px-6 py-2 rounded-full font-medium hover:bg-matcha-green/90 transition duration-200 ease-in-out'
             onClick={()=>setIsCreatePostModalOpen(!isCreatePostModalOpen)}>
                 Create post
             </button>
-            <button 
-            className='flex items-center justify-center'>
-                <i class="fa-solid fa-bell text-2xl"></i>
-            </button>
-            <button 
-            className='flex items-center justify-center'
-            onClick={()=>setIsOpen(!isOpen)}>
-                <i class="fa-solid fa-circle-user text-2xl"></i>
+            <button onClick={()=>setIsOpen(!isOpen)}>
+                <img src={icon} alt="" className='h-10'/>
             </button>
 
             {/* user menu\ */}

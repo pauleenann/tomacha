@@ -27,3 +27,30 @@ export const userOptions = [
         action: 'signout'
     },
 ]
+
+export const mainNavbarLinks = [
+    {
+        name: 'Home',
+        icon: 'fa-solid fa-house',
+    },
+    {
+        name: 'Messages',
+        icon: 'fa-solid fa-envelope',
+    },
+    {
+        name: 'Notifications',
+        icon: 'fa-solid fa-bell',
+    },
+    {
+        name: 'Groups',
+        icon: 'fa-solid fa-users',
+    },
+    {
+        name: 'Events',
+        icon: 'fa-solid fa-calendar-days',
+    },
+    {
+        name: 'Saved Posts',
+        icon: 'fa-solid fa-bookmark', 
+    },
+]

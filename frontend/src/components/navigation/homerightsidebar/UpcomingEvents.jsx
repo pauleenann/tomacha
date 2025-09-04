@@ -13,7 +13,7 @@ const UpcomingEvents = () => {
             ))}
                 
         </div>
-        <button className='mt-5 text-matcha-green'>
+        <button className='mt-5 text-matcha-light-green'>
             Show more
         </button>
     </div>

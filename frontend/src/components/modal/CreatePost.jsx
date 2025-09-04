@@ -6,7 +6,7 @@ const CreatePost = () => {
     const {isCreatePostModalOpen, setIsCreatePostModalOpen} = useAuth();
 
   return (
-    <div className='h-screen fixed inset-0 bg-matcha-green/20 flex items-center justify-center'>
+    <div className='h-screen fixed inset-0 bg-gray-500/20 backdrop-blur-xs flex items-center justify-center'>
       <div className='w-1/3 h-auto bg-white rounded-xl p-6 shadow'>
         <header className='flex justify-between items-center mb-4'>
             <span className='text-2xl font-frank-ruhl-libre'>Create new post</span>
@@ -49,7 +49,7 @@ const CreatePost = () => {
                 className='hidden'/>
             </div> 
             <button
-            className='bg-matcha-green text-white px-8 py-2 rounded-full font-medium hover:bg-matcha-green/90 transition duration-200 ease-in-out'>
+            className='bg-matcha-light-green text-white px-8 py-2 rounded-full font-medium hover:bg-matcha-green/90 transition duration-200 ease-in-out'>
                 Post
             </button>
         </div>
