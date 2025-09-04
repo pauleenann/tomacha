@@ -10,7 +10,7 @@ const HomeNavbar = () => {
     const handleOnClick = async (item)=>{
         if(item.action==='signout'){
             await signOut();
-            navigate('/login'); //redirect to login
+            navigate('/'); //redirect to login
         }else if(item.path){
             // navigate to path
             navigate(item.path)

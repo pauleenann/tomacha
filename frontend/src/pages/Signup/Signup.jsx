@@ -20,7 +20,7 @@ const Signup = () => {
         try {
             const {user, token} = await signUpWithEmailPassword(data);
             await login(user, token);
-            navigate('/');
+            navigate('/home');
         } catch (error) {
             console.log('Error signing up: ', error)
         }
@@ -167,7 +167,7 @@ const Signup = () => {
     
                 <p className='mt-10 text-sm text-center'>Already have an account?
                     <Link 
-                    to='/login'
+                    to='/'
                     className='font-semibold text-matcha-green link ms-1'>
                         Log in
                     </Link>

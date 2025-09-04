@@ -61,6 +61,58 @@ export const signInWithGoogle = async (req, res)=>{
     }
 }
 
+export const signIn = async (req, res)=>{
+    try {
+        console.log('signin',req.user);
+
+        // get user from decoded token 
+        const user = req.user;
+        
+        // throw an error if user is empty
+        if(!user) {
+            return res.status(400).json({
+                message: 'User is empty'
+            })
+        }
+
+        // destructure needed data 
+        const { email } = user;
+
+        // check first if user exists in the database, if does not exist, create user
+        let userExists = await User.findOne({email: email});
+
+        if(!userExists){
+            return res.status(400).json({
+                message: 'User does not exist. Please sign up first.'
+            })
+        }
+
+        // generate access token and refresh token
+        const accessToken = generateAccessToken({
+            userId: userExists._id,
+            role: userExists.role
+        })
+        const refreshToken = generateRefreshToken({
+            userId: userExists._id
+        })
+
+        // store refresh token to cookie
+        setRefreshTokenCookie(res, refreshToken)
+
+        //send response
+        return res.status(200).json({
+            token: accessToken,
+            user: userExists,
+            message: 'Signed in with google '
+        })
+    } catch (error) {
+        console.log(error);
+        return res.status(500).json({
+            message: 'Cannot sign in'
+        })
+    }
+}
+
 export const signUp = async (req, res)=>{
     try {
         const {firstName, lastName, email, username} = req.body;

@@ -1,6 +1,5 @@
 import { auth } from "./firebase";
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
-// import { createUserWithEmailAndPassword } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from "firebase/auth";
 import axios from 'axios';
 import api from "../api/axiosInstance";
 
@@ -32,6 +31,35 @@ export const signInWithGoogle = async ()=>{
         return response.data
     } catch (error) {
         console.log('Cannot sign in with google. An error occurred: ', error)
+    }
+}
+
+export const signInEmailPass = async (data)=>{
+    try {
+        const userCredential = await signInWithEmailAndPassword(auth, data.email, data.password);
+
+        //get firebase user
+        const user = userCredential.user;
+
+        //get token
+        const idToken = await user.getIdToken();
+
+        // pass to backend  
+        const response = await axios.post(`${API_BASE_URL}/auth/signin`,
+            {},
+            {
+                headers: {
+                    Authorization: `Bearer ${idToken}`
+                },
+                withCredentials: true
+            }
+        )
+        console.log(response)
+        
+        //return response.data
+        return response.data
+    } catch (error) {
+        console.log(error)
     }
 }
 

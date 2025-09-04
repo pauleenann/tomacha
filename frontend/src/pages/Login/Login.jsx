@@ -2,7 +2,7 @@ import React from 'react'
 import loginBg from '../../assets/images/loginBg.jpg'
 import google from '../../assets/images/google.png'
 import { useForm } from "react-hook-form"
-import { signInWithGoogle } from '../../firebase/auth'
+import { signInEmailPass, signInWithGoogle } from '../../firebase/auth'
 import { useAuth } from '../../context/AuthContext'
 import { Link, useNavigate } from 'react-router'
 
@@ -19,9 +19,19 @@ const Login = () => {
         try {
             const { user, token } = await signInWithGoogle();
             await login(user, token);
-            navigate('/')
+            navigate('/home')
         } catch (err) {
             console.error("Google sign-in failed:", err);
+        }
+    };
+
+    const signIn = async (data)=>{
+        try {
+            console.log('Signing in')
+            await signInEmailPass(data);
+            navigate('/home');
+        } catch (error) {
+            console.log(error)
         }
     }
 
@@ -42,7 +52,7 @@ const Login = () => {
 
         {/* login form */}
         <form 
-        onSubmit={handleSubmit(data => console.log(data))}
+        onSubmit={handleSubmit(signIn)}
         className='font-dm-sans lg:w-[55%] h-full flex flex-col items-center justify-center text-default'>
             <div className='w-full text-center'>
                 <h1 className='text-2xl lg:text-3xl font-medium'>Welcome back to Tomochá</h1>

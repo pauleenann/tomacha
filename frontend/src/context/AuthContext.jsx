@@ -16,6 +16,27 @@ export const AuthProvider = ({children})=>{
         setAccessToken(token);
     }
 
+    const refreshAccessToken = async ()=>{
+        try {
+            setLoading(true)
+            const response = await api.get('/auth/refresh');
+            console.log('Refresh access token response: ', response)
+
+            if(response.data){
+                setUser(response.data.user)
+                setAccessToken(response.data.token)
+                console.log('Access token refreshed', response.data.token)
+                navigate('/home');
+            }
+        } catch (error) {
+            console.log('Cannot refresh access token: ', error)
+        } finally {
+            setTimeout(()=>{
+               setLoading(false) 
+            },3000)
+        }
+    }
+
    useEffect(()=>{
         accessTokenRef.current = accessToken;
    }, [accessToken]);
@@ -32,26 +53,6 @@ export const AuthProvider = ({children})=>{
         });
 
         // refresh access token
-        const refreshAccessToken = async ()=>{
-            try {
-                setLoading(true)
-                const response = await api.get('/auth/refresh');
-                console.log('Refresh access token response: ', response)
-
-                if(response.data){
-                    setUser(response.data.user)
-                    setAccessToken(response.data.token)
-                    navigate('/');
-                }
-            } catch (error) {
-                console.log('Cannot refresh access token: ', error)
-            } finally {
-                setTimeout(()=>{
-                   setLoading(false) 
-                },3000)
-            }
-        }
-
         refreshAccessToken();
       
         return () => api.interceptors.request.eject(reqInterceptor);
@@ -61,7 +62,8 @@ export const AuthProvider = ({children})=>{
         user,
         accessToken,
         login,
-        loading
+        loading,
+        refreshAccessToken
     }
 
     return (

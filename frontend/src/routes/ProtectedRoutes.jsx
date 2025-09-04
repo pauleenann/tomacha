@@ -5,5 +5,5 @@ import { useAuth } from "../context/AuthContext"
 export const ProtectedRoutes = ()=>{
     const {accessToken} = useAuth();
     
-    return accessToken ? <Outlet /> : <Navigate to="/login" />;
+    return accessToken ? <Outlet /> : <Navigate to="/" />;
 }
