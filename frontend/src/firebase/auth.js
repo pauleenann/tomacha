@@ -1,5 +1,5 @@
 import { auth } from "./firebase";
-import { GoogleAuthProvider, signInWithPopup } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup } from "firebase/auth";
 // import { createUserWithEmailAndPassword } from "firebase/auth";
 import axios from 'axios';
 import api from "../api/axiosInstance";
@@ -32,6 +32,16 @@ export const signInWithGoogle = async ()=>{
         return response.data
     } catch (error) {
         console.log('Cannot sign in with google. An error occurred: ', error)
+    }
+}
+
+// sign up with email and password
+export const signUpWithEmailPassword = async (email, password)=>{
+    try {
+        const response = await createUserWithEmailAndPassword(auth, email, password);
+        console.log(response)
+    } catch (error) {
+        console.log('Error signing up with email and password: ', error)
     }
 }
 

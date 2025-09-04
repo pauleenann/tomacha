@@ -1,10 +1,10 @@
 import React from 'react'
 import loginBg from '../../assets/images/loginBg.jpg'
-import { authIcons } from '../../utils/constants'
+import google from '../../assets/images/google.png'
 import { useForm } from "react-hook-form"
 import { signInWithGoogle } from '../../firebase/auth'
 import { useAuth } from '../../context/AuthContext'
-import { useNavigate } from 'react-router'
+import { Link, useNavigate } from 'react-router'
 
 const Login = () => {
     const {login} = useAuth();
@@ -15,22 +15,16 @@ const Login = () => {
     } = useForm();
     const navigate = useNavigate();
 
-    const handleIconClick = async (name)=>{
-        switch(name){
-            case 'google':
-                try {
-                    const { user, token } = await signInWithGoogle();
-                    await login(user, token);
-                    navigate('/')
-                } catch (err) {
-                    console.error("Google sign-in failed:", err);
-                }
-                break;
-            default: 
-                console.log('Invalid. Please try again')
+    const googleSignin = async ()=>{
+        try {
+            const { user, token } = await signInWithGoogle();
+            await login(user, token);
+            navigate('/')
+        } catch (err) {
+            console.error("Google sign-in failed:", err);
         }
     }
-    
+
   return (
     <div className='w-screen h-screen overflow-y-hidden grid grid-cols-1 lg:grid-cols-[40%_1fr]'>
       {/* login image */}
@@ -48,7 +42,7 @@ const Login = () => {
 
         {/* login form */}
         <form 
-        onSubmit={handleSubmit((data)=>console.log(data))}
+        onSubmit={handleSubmit(data => console.log(data))}
         className='font-dm-sans lg:w-[55%] h-full flex flex-col items-center justify-center text-default'>
             <div className='w-full text-center'>
                 <h1 className='text-2xl lg:text-3xl font-medium'>Welcome back to Tomochá</h1>
@@ -101,26 +95,26 @@ const Login = () => {
             </button>
 
             {/* continue with */}
-            <div className='w-full grid grid-cols-[1fr_40%_1fr] lg:grid-cols-3 items-center gap-3 mt-8'>
+            <div className='w-full grid grid-cols-[1fr_40%_1fr] lg:grid-cols-3 items-center gap-3 mt-5'>
                 <hr className='text-gray-200'/>
                 <span className='text-center font-medium'>or continue with</span>
                 <hr className='text-gray-200'/>
             </div>
 
-            {/* auth icons */}
-            <div className='w-full flex items-center justify-center mt-5 gap-7'>
-                {authIcons.map((item,index)=>(
-                    <button
-                    type='button'
-                    onClick={()=>handleIconClick(item.name)}
-                    className='bg-default text-white h-12 w-12 rounded-full transition duration-200 ease-in-out font-medium hover:bg-black'
-                    key={index}>
-                        <i className={item.icon}></i>
-                    </button>
-                ))}
-            </div>
+            {/* google */}
+            <button 
+            type='button'
+            className='border border-gray-200 rounded p-3 w-full flex items-center justify-center gap-3 mt-5 hover:bg-gray-100 transition duration-200 ease-in-out'
+            onClick={googleSignin}
+            >
+                <img src={google} alt="" />
+                <span className='font-semibold'>Sign in with Google</span>
+            </button>
 
-            <p className='mt-10 text-sm'>New here? <span className='font-semibold text-matcha-green link'>Join Tomochá</span></p>
+            <p className='mt-10 text-sm'>New here? 
+                <Link to='/signup'
+                className='font-semibold text-matcha-green link ms-1'>Join Tomochá</Link>
+            </p>
         </form>
       </div>
     </div>

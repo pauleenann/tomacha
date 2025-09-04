@@ -5,6 +5,7 @@ import Home from '../pages/Home/Home'
 import { ProtectedRoutes } from './ProtectedRoutes'
 import { useAuth } from '../context/AuthContext'
 import { Puff } from 'react-loading-icons'
+import Signup from '../pages/Signup/Signup'
 
 const AppRoutes = () => {
     const {loading} = useAuth()
@@ -27,6 +28,11 @@ const AppRoutes = () => {
         <Route
         path='/login'
         element={<Login/>}
+        />
+
+        <Route
+        path='/signup'
+        element={<Signup/>}
         />
 
         {/* protected routes */}
